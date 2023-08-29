@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batalha Naval</title>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="body">
+    <table width="400px" class="table" cellspacing="0" cellpadding="0">
+      <script>
+        alert("Bem-vindo ao batalha naval\n\nConsiga 10 pontos para vencer\nPerca se perder as 5 vidas.")
+        montarCards("tile");
+
+        const cards = document.querySelectorAll("img");
+        const possiveisTiles = ["barco1", "barco2", "barco3", "agua"];
+
+        cards.forEach(element => element
+          .addEventListener("click", (e) => onCardClick(e.target)));
+
+        function onCardClick(objeto){
+          let valor = Math.floor(Math.random() * possiveisTiles.length);
+
+          if(valor == 3){
+            contagemVida--;
+            document.getElementById("vidasSpan").innerHTML = contagemVida;
+          }
+          else{
+            contagemPonto++;
+            document.getElementById("pontosSpan").innerHTML = contagemPonto;
+          }
+
+          objeto.src = `./assets/${possiveisTiles[valor]}.png`;
+
+          if(contagemPonto == 10){
+            alert("Você ganhou o game, parabéns !!");
+            location.reload();
+          }
+          if(contagemVida < 1){
+            alert("Você perdeu o game !!");
+            location.reload();
+          }
+        }
+
+        function montarCards(image){
+          const lengthAxisY = 5;
+          const lengthAxisX = 8;
+
+          document.write("<tbody>");
+          for(var y = 0; y < lengthAxisY; y++){
+            document.write("<tr>");
+              for(var x = 0; x < lengthAxisX; x++){
+                document.write(`<td><img width="50" height="45" src='./assets/${image}.png' alt='tile' class='tile'></td>`)
+              }
+              document.write("</tr>");
+            }
+          document.write("</tbody>");
+        }
+      </script>
+    </table>
+    <section>
+      <script>
+        var contagemPonto = 0;
+        var contagemVida = 5;
+        document.write(`<p>Pontos: <span id="pontosSpan" style='color: green'>${contagemPonto}</span></p>`);
+        document.write(`<p>Vidas: <span id="vidasSpan">${contagemVida}</span></p>`);
+      </script>
+    </section>
+  </main>
+</body>
+</html>
