@@ -1,3 +1,6 @@
 [submodule "Experiencia-Criativa/Experiencia-Criativa/Atividade-ExperienciaCriativa"]
 	path = Experiencia-Criativa/Experiencia-Criativa/Atividade-ExperienciaCriativa
 	url = https://github.com/marcosvmaximo/Atividade-ExperienciaCriativa
+[submodule "1-periodo/Experiencia-Criativa/Atividade-ExperienciaCriativa"]
+	path = 1-periodo/Experiencia-Criativa/Atividade-ExperienciaCriativa
+	url = https://github.com/marcosvmaximo/faculdade-bsi
