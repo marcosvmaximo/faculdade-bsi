@@ -31,9 +31,7 @@ CREATE TABLE Produtos (
     data_validade date,
     quantidade_estoque int,
     disponibilidade bool,
-    lote varchar(25),
-    fk_Categoria_id_categoria int,
-    fk_Lote_id_lote int
+    fk_Categoria_id_categoria int
 );
 
 CREATE TABLE Funcionarios (
@@ -58,9 +56,10 @@ CREATE TABLE ItensPedido (
 );
 
 CREATE TABLE Lotes (
-    id_lote int PRIMARY KEY,
-    numero_lote varchar(25) UNIQUE,
-    data_lote DATE
+    numero_de_serie varchar(25) PRIMARY KEY,
+    data_lote DATE,
+    data_validade DATE,
+    fk_Produto_id_produto int
 );
  
 ALTER TABLE Pedidos ADD CONSTRAINT FK_Pedidos_2
@@ -78,9 +77,9 @@ ALTER TABLE Produtos ADD CONSTRAINT FK_Produtos_2
     REFERENCES Categoria (id_categoria)
     ON DELETE CASCADE;
  
-ALTER TABLE Produtos ADD CONSTRAINT FK_Produtos_3
-    FOREIGN KEY (fk_Lote_id_lote)
-    REFERENCES Lotes (id_lote)
+ALTER TABLE Lotes ADD CONSTRAINT FKs_Lotes_1
+    FOREIGN KEY (fk_Produto_id_produto)
+    REFERENCES Produtos (id_produto)
     ON DELETE RESTRICT;
  
 ALTER TABLE ItensPedido ADD CONSTRAINT FK_ItensPedido_1
@@ -92,7 +91,6 @@ ALTER TABLE ItensPedido ADD CONSTRAINT FK_ItensPedido_2
     FOREIGN KEY (fk_Pedidos_id_pedido)
     REFERENCES Pedidos (id_pedido)
     ON DELETE SET NULL;
- 
  
  -- Cliente 1
 INSERT INTO Clientes (id_cliente, nome, cpf, rua, numero, bairro, cidade, cep, data_nascimento)
@@ -174,7 +172,6 @@ VALUES (9, 'Lucas Osvaldo Osvaldo Silveira', '2000-08-27', '2023-09-24', 4000.00
 INSERT INTO Funcionarios (id_funcionario, nome, data_nascimento, data_admissao, salario)
 VALUES (10, 'Davi Henry Kevin da Paz', '2000-01-09', '2023-09-24', 3900.00);
 
-
 -- Categoria 1: Pães
 INSERT INTO Categoria (id_categoria, nome)
 VALUES (1, 'Pães');
@@ -196,87 +193,124 @@ INSERT INTO Categoria (id_categoria, nome)
 VALUES (5, 'Salgados');
 
 -- Lote 1
-INSERT INTO Lotes (id_lote, numero_lote, data_lote)
-VALUES (1, 'LOTE2023001', '2023-01-15');
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023001', '2023-01-15', '2023-10-10', 1);
 
 -- Lote 2
-INSERT INTO Lotes (id_lote, numero_lote, data_lote)
-VALUES (2, 'LOTE2023002', '2023-02-20');
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023002', '2023-02-20', '2023-10-12', 2);
 
 -- Lote 3
-INSERT INTO Lotes (id_lote, numero_lote, data_lote)
-VALUES (3, 'LOTE2023003', '2023-03-10');
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023003', '2023-03-10', '2023-10-15', 3);
 
 -- Lote 4
-INSERT INTO Lotes (id_lote, numero_lote, data_lote)
-VALUES (4, 'LOTE2023004', '2023-04-05');
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023004', '2023-04-05', '2023-10-15', 4);
 
 -- Lote 5
-INSERT INTO Lotes (id_lote, numero_lote, data_lote)
-VALUES (5, 'LOTE2023005', '2023-05-12');
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-05-12', '2023-11-01', 5);
 
-ALTER TABLE Produtos
-DROP COLUMN lote;
+-- Lote 6
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2022-05-12', '2023-11-01', 5);
+
+-- Lote 7
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-02-15', '2023-11-01', 5);
+
+-- Lote 8
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-01-19', '2023-11-01', 5);
+
+-- Lote 9
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-07-20', '2023-11-01', 5);
+
+-- Lote 10
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-08-28', '2023-11-01', 5);
+
+-- Lote 11
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-11-30', '2023-11-01', 5);
+
+-- Lote 12
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-12-23', '2023-11-01', 5);
+
+-- Lote 13
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-04-09', '2023-11-01', 5);
+
+-- Lote 14
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-12-12', '2023-11-01', 5);
+
+-- Lote 15
+INSERT INTO Lotes (numero_de_serie, data_lote, data_validade, fk_Produto_id_produto)
+VALUES ('LOTE2023005', '2023-05-12', '2023-11-01', 5);
 
 -- Produto 1
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (1, 'Pão Francês', 1.50, '2023-10-10', 100, 1, 1, 1);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (1, 'Pão Francês', 1.50, '2023-10-10', 100, 1, 1);
 
 -- Produto 2
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (2, 'Pão de Forma Integral', 2.00, '2023-10-12', 80, 1, 1, 2);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (2, 'Pão de Forma Integral', 2.00, '2023-10-12', 80, 1, 1);
 
 -- Produto 3
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (3, 'Bolo de Cenoura', 8.00, '2023-10-15', 20, 1, 2, 3);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (3, 'Bolo de Cenoura', 8.00, '2023-10-15', 20, 1, 2);
 
 -- Produto 4
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (4, 'Bolo de Chocolate', 8.00, '2023-10-15', 15, 1, 2, 3);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (4, 'Bolo de Chocolate', 8.00, '2023-10-15', 15, 1, 2);
 
 -- Produto 5
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (5, 'Biscoito de Chocolate', 3.50, '2023-11-01', 50, 1, 3, 4);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (5, 'Biscoito de Chocolate', 3.50, '2023-11-01', 50, 1, 3);
 
 -- Produto 6
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (6, 'Biscoito de Coco', 3.50, '2023-11-01', 60, 1, 3, 4);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (6, 'Biscoito de Coco', 3.50, '2023-11-01', 60, 1, 3);
 
 -- Produto 7
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (7, 'Doce de Leite', 5.00, '2023-10-30', 30, 1, 4, 5);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (7, 'Doce de Leite', 5.00, '2023-10-30', 30, 1, 4);
 
 -- Produto 8
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (8, 'Brigadeiro', 2.50, '2023-10-28', 40, 1, 4, 5);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (8, 'Brigadeiro', 2.50, '2023-10-28', 40, 1, 4);
 
 -- Produto 9
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (9, 'Salgado de Queijo', 3.00, '2023-10-25', 25, 1, 5, 1);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (9, 'Salgado de Queijo', 3.00, '2023-10-25', 25, 1, 5);
 
 -- Produto 10
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (10, 'Salgado de Presunto', 3.00, '2023-10-25', 30, 1, 5, 2);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (10, 'Salgado de Presunto', 3.00, '2023-10-25', 30, 1, 5);
 
 -- Produto 11
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (11, 'Croissant', 2.00, '2023-10-20', 20, 1, 1, 3);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (11, 'Croissant', 2.00, '2023-10-20', 20, 1, 1);
 
 -- Produto 12
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (12, 'Rosquinha', 1.50, '2023-10-25', 40, 1, 3, 4);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (12, 'Rosquinha', 1.50, '2023-10-25', 40, 1, 3);
 
 -- Produto 13
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (13, 'Pão de Queijo', 2.50, '2023-10-15', 30, 1, 5, 3);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (13, 'Pão de Queijo', 2.50, '2023-10-15', 30, 1, 5);
 
 -- Produto 14
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (14, 'Torta de Limão', 10.00, '2023-10-22', 10, 1, 2, 1);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (14, 'Torta de Limão', 10.00, '2023-10-22', 10, 1, 2);
 
 -- Produto 15
-INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria, fk_Lote_id_lote)
-VALUES (15, 'Torta de Morango', 10.00, '2023-10-22', 12, 1, 2, 2);
+INSERT INTO Produtos (id_produto, nome, valor, data_validade, quantidade_estoque, disponibilidade, fk_Categoria_id_categoria)
+VALUES (15, 'Torta de Morango', 10.00, '2023-10-22', 12, 1, 2);
 
 --------
 -- Pedido 1
@@ -359,26 +393,39 @@ VALUES (10, '2023-10-03', 'Entregar na Rua J', 10, 10);
 INSERT INTO ItensPedido (Id_itensPedido, fk_Produtos_id_produto, fk_Pedidos_id_pedido, quantidade)
 VALUES (19, 3, 10, 1), (20, 5, 10, 4);
 
+-- Pedidos Extras
+
+INSERT INTO Pedidos (id_pedido, data_realizacao, observacao, fk_Clientes_id_cliente, fk_Funcionarios_id_funcionario)
+VALUES (12, '2023-04-01', 'Vou pegar', 10, 10);
+
+
+INSERT INTO Pedidos (id_pedido, data_realizacao, observacao, fk_Clientes_id_cliente, fk_Funcionarios_id_funcionario)
+VALUES (11, '2023-10-08', 'Irei Buscar', 10, 10);
+
+INSERT INTO Pedidos (id_pedido, data_realizacao, observacao, fk_Clientes_id_cliente, fk_Funcionarios_id_funcionario)
+VALUES (13, '2023-12-22', 'Entregar na Rua J', 1, 8);
+
+select * from Lotes;
+
 SELECT
     P.id_produto,
     P.nome AS nome_produto,
     P.valor,
-    P.data_validade,
     P.quantidade_estoque,
     P.disponibilidade,
     C.id_categoria,
     C.nome AS nome_categoria,
-    L.id_lote,
-    L.numero_lote,
+    L.numero_de_serie,
+    L.data_validade,
     L.data_lote
 FROM
     Produtos AS P
 JOIN
     Categoria AS C ON P.fk_Categoria_id_categoria = C.id_categoria
 JOIN
-    Lotes AS L ON P.fk_Lote_id_lote = L.id_lote;
+    Lotes AS L ON L.fk_Produto_id_produto = P.id_produto;
 
-select * from Produtos;
+select * from Lotes;
 
 SELECT 
 nome AS Nome,
@@ -390,30 +437,24 @@ WHERE disponibilidade = 1;
 SELECT * from Funcionarios;
 
 
-UPDATE Funcionarios
-SET data_nascimento = '1975-08-04'
-WHERE id_funcionario = 4;
+-- UPDATE Funcionarios
+-- SET data_nascimento = '1975-08-04'
+-- WHERE id_funcionario = 4;
 
-UPDATE Produtos
-SET valor = 6.50
-WHERE id_produto = 12;
+-- UPDATE Produtos
+-- SET valor = 6.50
+-- WHERE id_produto = 12;
 
-select * from Produtos;
+-- ALTER TABLE Produtos
+-- MODIFY valor DECIMAL(10, 2);
 
-ALTER TABLE Produtos
-MODIFY valor DECIMAL(10, 2);
 -- Consultas
 SELECT   
 c.nome as Categoria, 
-
 AVG(DATEDIFF(p.data_validade, CURDATE())) AS 'Media  Da Validade Por Categoria' 
-
-FROM Produtos p, Categorias c  
-
+FROM Produtos p, Categoria c  
 WHERE p.fk_Categoria_id_categoria = c.id_categoria AND  
-
 disponibilidade = 1 
-
 GROUP BY p.fk_Categoria_id_categoria; 
 
 
@@ -448,7 +489,7 @@ FROM
 JOIN 
     ItensPedido AS I ON P.id_produto = I.fk_Produtos_id_produto
 JOIN 
-    Categorias AS C ON P.fk_Categoria_id_categoria = C.id_categoria 
+    Categoria AS C ON P.fk_Categoria_id_categoria = C.id_categoria 
 GROUP BY P.fk_Categoria_id_categoria;
 
 select * from Produtos;
